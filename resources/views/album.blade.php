@@ -4,7 +4,7 @@
 <div class="container">
     <div class="search-container">
         <h1>Discover Albums</h1>
-        <form action="" method="GET" class="search-form">
+        <form action="{{ route('album.index') }}" method="get" class="search-form">
             <input type="text" name="search" placeholder="Search for albums">
             <button type="submit">Search</button>
         </form>
