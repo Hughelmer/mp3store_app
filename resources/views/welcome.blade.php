@@ -15,5 +15,4 @@
 
 </div>
 <a href="{{ route('home') }}" class="btn btn-primary">Check Songs</a>
-<a href="{{ route('album') }}" class="btn btn-primary">Check Albums</a>
 @endsection
