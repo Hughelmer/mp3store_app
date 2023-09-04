@@ -11,19 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('cover_image')->nullable(); // Add this line to create the 'cover_image' column
+            $table->double('duration', 8, 2)->default(0.00);
+            $table->unsignedBigInteger('artist_id');
             $table->timestamps();
+
+            // Define foreign key constraint
+            $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
+     * 
+     * @return void
      */
     public function down(): void
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('songs');
     }
 };

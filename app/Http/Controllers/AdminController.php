@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        return view('admin_dashboard');
     }
 
     public function createAlbum(Request $request)
@@ -32,6 +32,22 @@ class AdminController extends Controller
         // Validate input
         $validatedData = $request->validate([
             'title' => 'required|string',
+            'duration' => 'nullable|numeric', // Make the duration field optional
+            // Add more validation rules as needed
+        ]);
+
+        // Create song
+        $song = Song::create($validatedData);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Song created successfully');
+    }
+
+    public function storeSong(Request $request)
+    {
+        // Validate input for song creation
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'duration' => 'nullable|numeric', // Make the duration field optional
             // Add more validation rules as needed
         ]);
 
