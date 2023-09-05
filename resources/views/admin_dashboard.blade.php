@@ -16,13 +16,37 @@
         <button type="submit">Create Album</button>
     </form>
 
-    <!-- Create Song Form -->
-    <form action="{{ route('admin.createSong') }}" method="POST">
+    <!-- Create Artist Form -->
+    <form action="{{ route('admin.createArtist') }}" method="POST">
         @csrf
-        <label for="song-title">Song Title:</label>
-        <input type="text" id="song-title" name="title" required>
-        <!-- Add more input fields for song details -->
-        <button type="submit">Create Song</button>
+        <div class="form-group">
+            <label for="artist-name">Artist Name</label>
+            <input type="text" class="form-control" id="artist-name" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Artist</button>
     </form>
+
+    <!-- Create Song Form -->
+    <form action="{{ route('admin.createSong') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+            <label for="title">Song Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="artist_id">Select Artist:</label>
+            <select name="artist_id" id="artist_id" required>
+                @foreach($artists as $artist)
+                    <option value="{{ $artist->id }}">{{ $artist->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="audio_file">Audio File</label>
+            <input type="file" class="form-control-file" id="audio_file" name="audio_file" accept=".mp3" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Song</button>
+    </form>
+
 </div>
 @endsection

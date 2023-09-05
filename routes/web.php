@@ -36,6 +36,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/createSong', [AdminController::class, 'createSong'])->name('admin.createSong');
     Route::post('/admin/createAlbum', [AdminController::class, 'createAlbum'])->name('admin.createAlbum');
     Route::post('/admin/createSong', [AdminController::class, 'createSong'])->name('admin.createSong');
+    Route::get('/admin/createArtist', [AdminController::class, 'createArtist'])->name('admin.createArtist');
+    Route::post('/admin/createArtist', [AdminController::class, 'createArtist'])->name('admin.createArtist');
+    Route::post('/admin/storeArtist', [AdminController::class, 'storeArtist'])->name('admin.storeArtist');
 });
 
 //Album routes
@@ -53,9 +56,6 @@ Route::get('/songs/{id}', [SongController::class, 'show'])->name('song.show');
 // Route to view a single song
 Route::get('songs/{song}', [SongController::class, 'viewSong'])->name('songs.view');
 
-//Artist routes
-Route::get('/artists', [ArtistController::class, 'index'])->name('artist.index');
-Route::get('/artists/{id}', [ArtistController::class, 'show'])->name('artist.show');
 
 //SongCode routes
 Route::get('/song-codes', [SongCodeController::class, 'index'])->name('song-code.index');

@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->double('duration', 8, 2)->default(0.00);
+            $table->string('audio_file', 255)->nullable(); // Store the path to the audio file
+            $table->double('duration', 8, 2)->nullable(); // Allow for NULL duration initially
             $table->unsignedBigInteger('artist_id');
-            $table->timestamps();
 
             // Define foreign key constraint
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

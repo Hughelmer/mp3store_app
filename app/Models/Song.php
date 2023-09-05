@@ -9,9 +9,12 @@ class Song extends Model
 {
     protected $fillable = [
         'title',
-        'duration',
         'artist_id',
         // Add more fillable fields here
+    ];
+
+    protected $attributes = [
+        'audio_file' => '',
     ];
 
     // Relationship with Album

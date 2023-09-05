@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Album;
 use App\Models\Song;
+use App\Models\Artist;
 
 class AdminController extends Controller
 {
     public function dashboard()
-    {
-        return view('admin_dashboard');
+    {   
+        $artists = Artist::all(); // Retrieve all artists from the database
+
+        return view('admin_dashboard', compact('artists')); // Pass the artists variable to the view
     }
 
     public function createAlbum(Request $request)
@@ -56,4 +59,18 @@ class AdminController extends Controller
 
         return redirect()->route('admin.dashboard')->with('success', 'Song created successfully');
     }
+
+    public function createArtist(Request $request)
+    {
+        // Validate input
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+        ]);
+
+        // Create artist
+        $artist = Artist::create($validatedData);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Artist created successfully');
+    }
+
 }
