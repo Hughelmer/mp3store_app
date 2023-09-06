@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('audio_file', 255)->nullable(); // Store the path to the audio file
+            $table->string('audio_file', 255)->nullable();
             $table->double('duration', 8, 2)->nullable(); // Allow for NULL duration initially
             $table->unsignedBigInteger('artist_id');
 
