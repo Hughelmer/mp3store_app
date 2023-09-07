@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('songs', function (Blueprint $table) {
+        Schema::create('albums', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('audio_file', 255)->nullable();
-            $table->double('duration', 8, 2)->nullable(); // Allow for NULL duration initially
-            $table->unsignedBigInteger('artist_id');
-
+            $table->string('artist_id')->nullable();
+            $table->string('cover_image')->nullable(); // Add this line to create the 'cover_image' column
             // Define foreign key constraint
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
             $table->timestamps();
@@ -26,11 +24,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     * 
-     * @return void
      */
     public function down(): void
     {
-        Schema::dropIfExists('songs');
+        Schema::dropIfExists('albums');
     }
 };

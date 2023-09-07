@@ -44,24 +44,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
 //Album routes
 Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
 Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
-
-// Route to view a list of songs from an album
 Route::get('albums/{album}/songs', [AlbumController::class, 'viewSongs'])->name('albums.songs');
 
-
-//Song routes
+// Song routes
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
 Route::get('/songs/{id}', [SongController::class, 'show'])->name('song.show');
-
-// Route to view a single song
 Route::get('songs/{song}', [SongController::class, 'viewSong'])->name('songs.view');
-
 
 //SongCode routes
 Route::get('/song-codes', [SongCodeController::class, 'index'])->name('song-code.index');
 Route::get('/song-codes/{id}', [SongCodeController::class, 'show'])->name('song-code.show');
 
 // Cart routes
-Route::get('/cart', 'CartController@index')->name('cart');
-Route::get('/checkout', 'CheckoutController@index')->name('checkout');
-
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/checkout', [CheckoutController::class, 'index'])->name('cart.checkout');

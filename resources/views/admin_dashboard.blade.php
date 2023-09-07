@@ -9,8 +9,18 @@
     <!-- Create Album Form -->
     <form action="{{ route('admin.createAlbum') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <label for="album-title">Album Title:</label>
-        <input type="text" id="album-title" name="title" class="form-control" required>
+        <div class="form-group">
+            <label for="album-title">Album Title:</label>
+            <input type="text" id="album-title" name="title" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="artist_id">Select Artist:</label>
+            <select id="artist_id" name="artist_id" required>
+                @foreach($artists as $artist)
+                    <option value="{{ $artist->id }}">{{ $artist->name }}</option>
+                @endforeach
+            </select>
+        </div>
         <label for="album-cover">Cover Image:</label>
         <input type="file" id="album-cover" name="cover_image" accept="image/*" class="form-control" required>
         <button type="submit" class="btn btn-primary">Create Album</button>
@@ -39,6 +49,16 @@
                 @foreach($artists as $artist)
                     <option value="{{ $artist->id }}" {{ old('artist_id') == $artist->id ? 'selected' : '' }}>
                         {{ $artist->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="album_id">Select Album:</label>
+            <select id="album_id" name="album_id" required>
+                @foreach($albums as $album)
+                    <option value="{{ $album->id }}" {{ old('album_id') == $album->id ? 'selected' : '' }}>
+                        {{ $album->title }}
                     </option>
                 @endforeach
             </select>

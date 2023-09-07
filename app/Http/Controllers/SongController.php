@@ -38,6 +38,8 @@ class SongController extends Controller
 
     public function createSong(Request $request)
     {   
+        // Fetch the list of artists from your database
+        $artists = Artist::all();
 
         // Validate input
         $validator = Validator::make($request->all(), [
@@ -45,6 +47,7 @@ class SongController extends Controller
             'artist_id' => 'required|exists:artists,id',
             'audio_file' => 'required|mimes:mp3,wav,ogg',
             'duration' => 'nullable|numeric',
+            'album_id' => 'required|exists:albums,id',
         ]);
 
         if ($validator->fails()) {
@@ -72,6 +75,7 @@ class SongController extends Controller
             'artist_id' => $request->input('artist_id'),
             'audio_file' => $audioPath ? 'public/audio/' . $filename : null,
             'duration' => $duration,
+            'album_id' => $request->input('album_id'),
         ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'Song uploaded successfully');

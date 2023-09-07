@@ -21,9 +21,10 @@ class AdminController extends Controller
 
     public function dashboard()
     {   
-        $artists = Artist::all(); // Retrieve all artists from the database
+        $artists = Artist::all();
+        $albums = Album::all(); // Retrieve all artists from the database
 
-        return view('admin_dashboard', compact('artists')); // Pass the artists variable to the view
+        return view('admin_dashboard', compact('artists', 'albums')); // Pass the artists variable to the view
     }
 
     public function createAlbum(Request $request)
@@ -31,6 +32,7 @@ class AdminController extends Controller
         // Validate input
         $validatedData = $request->validate([
             'title' => 'required|string',
+            'artist_id' => 'required|exists:artists,id',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -41,13 +43,18 @@ class AdminController extends Controller
     }
 
     public function createSong(Request $request)
-    {
+    {   
+        // Fetch the list of artists & albums from your database
+        $artists = Artist::all();
+        $albums = Album::all();
+
         // Validate input
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'artist_id' => 'required|exists:artists,id',
             'audio_file' => 'required|mimes:mp3,wav,ogg',
             'duration' => 'nullable|numeric',
+            'album_id' => 'required|exists:albums,id',
         ]);
 
         if ($validator->fails()) {
@@ -65,6 +72,7 @@ class AdminController extends Controller
                 'artist_id' => $request->input('artist_id'),
                 'audio_file' => 'public/audio/' . $filename,
                 'duration' => $request->input('duration'),
+                'album_id' => $request->input('album_id'),
             ]);
 
             if ($song) {

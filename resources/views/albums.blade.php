@@ -12,14 +12,19 @@
 
     <div class="albums-list">
         @if (count($albums) > 0)
-            @foreach ($albums as $album)
-                <div class="album-card">
-                    <h3>{{ $album->title }}</h3>
-                    <!-- Display album details here -->
-                </div>
-            @endforeach
+            <div class="row">
+                @foreach ($albums as $album)
+                    <div class="col-md-4">
+                        <div class="album-card">
+                            <h3>{{ $album->title }}</h3>
+                            <!-- Display album details here -->
+                            <a href="{{ route('albums.show', $album->id) }}" class="btn btn-primary">View Album</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         @else
-            <p>No album found</p>
+            <p>No albums found</p>
         @endif
     </div>
 </div>

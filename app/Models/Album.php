@@ -9,7 +9,7 @@ class Album extends Model
 {
     protected $fillable = [
         'title',
-        'artist',
+        'artist_id',
         'cover_image',
         // Add more fillable fields here
     ];
