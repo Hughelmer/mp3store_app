@@ -10,7 +10,7 @@ class Song extends Model
     protected $fillable = [
         'title',
         'artist_id',
-        'album_id',
+        'album_id', 
         'audio_file', 
         'duration'
         // Add more fillable fields here

@@ -1,14 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\SongCodeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,11 +52,20 @@ Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
 Route::get('/songs/{id}', [SongController::class, 'show'])->name('song.show');
 Route::get('songs/{song}', [SongController::class, 'viewSong'])->name('songs.view');
 
-//SongCode routes
-Route::get('/song-codes', [SongCodeController::class, 'index'])->name('song-code.index');
-Route::get('/song-codes/{id}', [SongCodeController::class, 'show'])->name('song-code.show');
 
 // Cart routes
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart/checkout', [CheckoutController::class, 'index'])->name('cart.checkout');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{song}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/remove/{cart}', [CartController::class, 'remove'])->name('cart.remove');
+    
+    Route::get('/cart/checkout', [CheckoutController::class, 'index'])->name('cart.checkout');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    // Show the order details
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+    // Store a new order
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+});
+

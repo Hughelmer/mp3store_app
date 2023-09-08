@@ -9,12 +9,12 @@
             <p>Album: {{ $song->album->title }}</p>
             <p>Duration: {{ $song->duration }} minutes</p>
             <audio controls>
-                <source src="{{ $song->audio_url }}" type="audio/mpeg">
+                <source src="{{ asset($song->audio_file) }}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
         <div class="col-md-6">
-            <form action="{{ route('cart.add', $song->id) }}" method="POST">
+            <form action="{{ route('cart.add', $song) }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-primary">Add to Cart</button>
             </form>

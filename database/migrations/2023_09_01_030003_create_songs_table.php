@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('songs', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('title');
             $table->string('audio_file', 255)->nullable();
             $table->double('duration', 8, 2)->nullable(); // Allow for NULL duration initially

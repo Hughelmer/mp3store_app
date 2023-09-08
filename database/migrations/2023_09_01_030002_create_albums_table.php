@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('albums', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('title');
-            $table->string('artist_id')->nullable();
-            $table->string('cover_image')->nullable(); // Add this line to create the 'cover_image' column
+            $table->unsignedBigInteger('artist_id')->nullable();
+            $table->string('cover_image')->nullable();
             // Define foreign key constraint
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
             $table->timestamps();

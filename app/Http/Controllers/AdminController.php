@@ -92,7 +92,7 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string',
             'duration' => 'nullable|numeric', // Make the duration field optional
-            // Add more validation rules as needed
+
         ]);
 
         // Create song

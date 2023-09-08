@@ -26,7 +26,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $albums = Album::all(); // Replace with your retrieval logic
+        $albums = Album::all();
         return view('home', compact('albums'));
     }
 }

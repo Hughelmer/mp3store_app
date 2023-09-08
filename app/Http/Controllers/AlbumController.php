@@ -17,7 +17,6 @@ class AlbumController extends Controller
             $albums = []; // Empty array when no search query is provided
         }
 
-        // return view('albums.index', compact('albums', 'search'));
         return view('albums', compact('albums', 'search'));
     }
 
@@ -30,9 +29,9 @@ class AlbumController extends Controller
 
     public function viewSongs(Album $album)
     {
-        $songs = $album->songs; // Assuming you have a relationship set up
+        $songs = $album->songs;
         return view('album_songs', compact('album', 'songs'));
     }
 
-    // Add methods for create, store, edit, update, and destroy as needed
+    // Add methods for create, store, edit, update, and destroy here
 }

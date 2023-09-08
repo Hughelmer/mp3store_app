@@ -19,5 +19,5 @@ class ArtistController extends Controller
         return view('artists.show', compact('artist'));
     }
 
-    // Add methods for create, store, edit, update, and destroy as needed
+    // Add methods for create, store, edit, update, and destroy here
 }

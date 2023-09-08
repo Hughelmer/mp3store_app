@@ -81,5 +81,5 @@ class SongController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Song uploaded successfully');
     }
 
-    // Add methods for create, store, edit, update, and destroy as needed
+    // Add methods for create, store, edit, update, and destroy here
 }

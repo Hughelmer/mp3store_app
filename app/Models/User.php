@@ -48,4 +48,28 @@ class User extends Authenticatable
     {
         return $this->role === 'admin'; // Replace with your role check logic
     }
+
+    public function addToCart(Song $song)
+    {
+        $this->cartItems()->updateOrCreate(
+            ['song_id' => $song->id],
+            ['quantity' => $this->cartItems()->where('song_id', $song->id)->value('quantity') + 1]
+        );
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function createOrder($orderTotal)
+    {
+        return $this->orders()->create(['order_total' => $orderTotal]);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }

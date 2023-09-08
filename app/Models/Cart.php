@@ -5,14 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SongCode extends Model
+class Cart extends Model
 {
     protected $fillable = [
-        'code',
-        // Add more fillable fields here
+        'user_id', 
+        'song_id', 
+        'quantity',
     ];
 
-    // Relationship with Song
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function song()
     {
         return $this->belongsTo(Song::class);
