@@ -8,6 +8,7 @@
             <p>Artist: {{ $song->artist->name }}</p>
             <p>Album: {{ $song->album->title }}</p>
             <p>Duration: {{ $song->duration }} minutes</p>
+             <p>Price: ${{ $song->price }}</p>
             <audio controls>
                 <source src="{{ asset($song->audio_file) }}" type="audio/mpeg">
                 Your browser does not support the audio element.

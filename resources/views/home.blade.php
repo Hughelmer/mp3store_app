@@ -18,29 +18,29 @@
 
     </div>
 
-    <div class="albums-list">
+    <div class="row albums-list">
 
         @foreach ($albums as $album)
 
-        <div class="album-card">
-
-            <a href="{{ route('albums.show', $album->id) }}">
-
-                <h3>{{ $album->title }}</h3>
-
-                {{-- Check if the artist relationship exists --}}
-                @if ($album->artist)
-
-                    <p>{{ $album->artist->name }}</p>
-
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                @if ($album->cover_image)
+                <!-- Assuming the 'cover_image' column contains the file paths of album cover images -->
+                <img src="{{ asset($album->cover_image) }}" class="card-img-top" alt="{{ $album->title }}" style="max-width: 100%; max-height: 200px;">
                 @else
-
-                    <p>Unknown Artist</p> {{-- Provide a default value for unknown artists --}}
-
+                <!-- Provide a default image from the public directory -->
+                <img src="{{ asset('img/default-img.png') }}" class="card-img-top" alt="Default Image" style="max-width: 100%; max-height: 200px;">
                 @endif
-
-            </a>
-
+                <div class="card-body">
+                    <h5 class="card-title">{{ $album->title }}</h5>
+                    @if ($album->artist)
+                        <p class="card-text">{{ $album->artist->name }}</p>
+                    @else
+                        <p class="card-text">Unknown Artist</p>
+                    @endif
+                    <a href="{{ route('albums.show', $album->id) }}" class="btn btn-primary">View Album</a>
+                </div>
+            </div>
         </div>
 
         @endforeach

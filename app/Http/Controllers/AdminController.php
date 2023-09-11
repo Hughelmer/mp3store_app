@@ -30,16 +30,33 @@ class AdminController extends Controller
     public function createAlbum(Request $request)
     {
         // Validate input
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'artist_id' => 'required|exists:artists,id',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Create album
-        $album = Album::create($validatedData);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        return redirect()->route('admin.dashboard')->with('success', 'Album created successfully');
+        // Handle album cover image upload
+        if ($request->hasFile('cover_image')) {
+            $imagePath = $request->file('cover_image')->store('public/img/album_covers'); // Store the image in the 'storage/app/public/img/album_covers' directory
+
+            // Create album with the image path
+            $album = new Album([
+                'title' => $request->input('title'),
+                'artist_id' => $request->input('artist_id'),
+                'cover_image' => str_replace('public/', 'storage/', $imagePath), // Update the image path
+            ]);
+
+            $album->save();
+
+            return redirect()->route('admin.dashboard')->with('success', 'Album created successfully');
+        }
+
+        return redirect()->back()->with('error', 'Failed to upload the album cover image');
     }
 
     public function createSong(Request $request)
@@ -52,9 +69,10 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'artist_id' => 'required|exists:artists,id',
-            'audio_file' => 'required|mimes:mp3,wav,ogg',
+            'audio_file' => 'required|mimes:mp3,wav,ogg,flac',
             'duration' => 'nullable|numeric',
             'album_id' => 'required|exists:albums,id',
+            'price' => 'required|numeric|min:0.00',
         ]);
 
         if ($validator->fails()) {
@@ -65,14 +83,18 @@ class AdminController extends Controller
         if ($request->hasFile('audio_file')) {
             $file = $request->file('audio_file');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('audio', $filename, 'public');
 
+            // Store the file in the 'public/audio/songs/' directory
+            $file->storeAs('public/audio/songs/', $filename);
+
+            // Create a new song record in the database
             $song = Song::create([
                 'title' => $request->input('title'),
                 'artist_id' => $request->input('artist_id'),
-                'audio_file' => 'public/audio/' . $filename,
+                'audio_file' => 'public/audio/songs/' . $filename,
                 'duration' => $request->input('duration'),
                 'album_id' => $request->input('album_id'),
+                'price' => $request->input('price'),
             ]);
 
             if ($song) {

@@ -16,17 +16,27 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $orderTotal = 0; // Initialize the total variable
+                @endphp
+
                 @foreach ($cartItems as $cartItem)
                     <tr>
                         <td>{{ $cartItem->song->title }}</td>
                         <td>{{ $cartItem->quantity }}</td>
                         <td>${{ $cartItem->song->price }}</td>
                     </tr>
+                    
+                    @php
+                        // Calculate the subtotal for this item and add it to the total
+                        $subtotal = $cartItem->quantity * $cartItem->song->price;
+                        $orderTotal += $subtotal;
+                    @endphp
                 @endforeach
             </tbody>
         </table>
 
-        <p>Total: ${{ $orderTotal }}</p>
+        <p>Total: ${{ number_format($orderTotal, 2) }}</p>
 
         <form action="{{ route('checkout.store') }}" method="POST">
             @csrf
