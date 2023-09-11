@@ -67,5 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Store a new order
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-});
 
+    // Get existing orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+});

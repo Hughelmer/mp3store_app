@@ -12,7 +12,8 @@ class Song extends Model
         'artist_id',
         'album_id', 
         'audio_file', 
-        'duration'
+        'duration',
+        'price',
         // Add more fillable fields here
     ];
 

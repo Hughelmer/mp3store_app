@@ -67,6 +67,10 @@
             <label for="audio_file">Audio File</label>
             <input type="file" class="form-control-file" id="audio_file" name="audio_file" accept=".mp3" required>
         </div>
+        <div class="form-group">
+            <label for="price">Price (USD)</label>
+            <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}" required>
+        </div>
         @if ($errors->has('title') || $errors->has('artist_id') || $errors->has('audio_file'))
             <div class="alert alert-danger">
                 <ul>

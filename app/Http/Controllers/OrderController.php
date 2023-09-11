@@ -8,6 +8,16 @@ use App\Models\User;
 
 class OrderController extends Controller
 {
+
+    public function index()
+    {
+        // Get the user's orders
+        $orders = Order::where('user_id', auth()->id())->get();
+
+        // Return a view with the user's orders
+        return view('orders.index', compact('orders'));
+    }
+    
     // Show the details of a specific order
     public function show($id)
     {

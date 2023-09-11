@@ -12,6 +12,15 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'song_id',
+        'quantity',
+        'price',
+
+        // Add any other fillable fields here
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -30,6 +39,11 @@ class OrderItem extends Model
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('song_id')->references('id')->on('songs')->onDelete('cascade');
         });
+    }
+
+    public function song()
+    {
+        return $this->belongsTo(Song::class);
     }
 
 }

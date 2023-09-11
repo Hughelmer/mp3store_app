@@ -48,6 +48,7 @@ class SongController extends Controller
             'audio_file' => 'required|mimes:mp3,wav,ogg',
             'duration' => 'nullable|numeric',
             'album_id' => 'required|exists:albums,id',
+            'price' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {

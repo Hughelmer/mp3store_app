@@ -36,7 +36,7 @@
 
         <p>Total: ${{ $cartItems->sum(function ($cartItem) { return $cartItem->song->price * $cartItem->quantity; }) }}</p>
 
-        <a href="{{ route('checkout.index') }}" class="btn btn-primary">Proceed to Checkout</a>
+        <a href="{{ route('cart.checkout') }}" class="btn btn-primary">Proceed to Checkout</a>
     @endif
 </div>
 @endsection

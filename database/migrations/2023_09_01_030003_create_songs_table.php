@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('audio_file', 255)->nullable();
             $table->double('duration', 8, 2)->nullable(); // Allow for NULL duration initially
+            $table->decimal('price', 8, 2)->default(0.00); // Set the default price to 0.00
             $table->unsignedBigInteger('artist_id');
             $table->unsignedBigInteger('album_id')->nullable();
 

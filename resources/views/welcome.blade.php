@@ -14,5 +14,7 @@
 
 
 </div>
-<a href="{{ route('home') }}" class="btn btn-primary">Check Songs</a>
+<div class="text-center">
+    <a href="{{ route('home') }}" class="btn btn-primary">Check Songs</a>
+</div>
 @endsection
