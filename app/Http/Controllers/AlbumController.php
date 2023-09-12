@@ -33,5 +33,16 @@ class AlbumController extends Controller
         return view('album_songs', compact('album', 'songs'));
     }
 
+    public function destroy(Album $album)
+    {
+
+        // Delete the album and its associated songs (if needed)
+        $album->songs()->delete();
+        $album->delete();
+
+        // Redirect to the album's list of songs page
+        return redirect()->route('home')->with('success', 'Album deleted successfully');
+    }
+
     // Add methods for create, store, edit, update, and destroy here
 }

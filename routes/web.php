@@ -54,7 +54,6 @@ Route::middleware(['auth'])->group(function () {
         abort(404);
     })->name('audio.file');
 
-
     //Album routes
     Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
     Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
