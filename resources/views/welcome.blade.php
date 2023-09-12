@@ -14,8 +14,6 @@
         Brows from the most iconic songs of your time.
     </div>
 
-
-
 </div>
 <div class="text-center">
     <a href="{{ route('home') }}" class="btn btn-primary">Check Songs</a>

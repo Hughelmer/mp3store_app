@@ -9,6 +9,12 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # Allow direct access to the storage directory
+    RewriteRule ^storage/(.*)$ storage/app/public/$1 [L,NC]
+
+    # Allow direct access to the public directory
+    RewriteRule ^public/(.*)$ public/$1 [L,NC]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$

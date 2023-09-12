@@ -13,9 +13,9 @@
             <!-- Debugging output: -->
             <p>Audio File Path: {{ $song->audio_file }}</p>
             <p>Generated URL: {{ asset($song->audio_file) }}</p>
-            
+
             <audio controls>
-                <source src="{{ asset($song->audio_file) }}" type="audio/mpeg">
+                <source src="{{ Storage::url($song->audio_file) }}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
