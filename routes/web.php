@@ -42,6 +42,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/storeArtist', [AdminController::class, 'storeArtist'])->name('admin.storeArtist');
 });
 
+Route::get('/audio/{filename}', function ($filename) {
+    $filePath = 'public/audio/songs/' . $filename;
+    
+    if (Storage::exists($filePath)) {
+        return Storage::response($filePath);
+    }
+
+    abort(404);
+})->name('audio.file');
+
+
 //Album routes
 Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
 Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
@@ -51,6 +62,7 @@ Route::get('albums/{album}/songs', [AlbumController::class, 'viewSongs'])->name(
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
 Route::get('/songs/{id}', [SongController::class, 'show'])->name('song.show');
 Route::get('songs/{song}', [SongController::class, 'viewSong'])->name('songs.view');
+Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('song.destroy');
 
 
 // Cart routes

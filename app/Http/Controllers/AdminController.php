@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
 use App\Models\Album;
 use App\Models\Song;
 use App\Models\Artist;
 use App\Helpers\AudioUtils;
-use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -61,6 +63,9 @@ class AdminController extends Controller
 
     public function createSong(Request $request)
     {   
+        // Initialize the $filename variable
+        $filename = '';
+
         // Fetch the list of artists & albums from your database
         $artists = Artist::all();
         $albums = Album::all();
@@ -86,6 +91,7 @@ class AdminController extends Controller
 
             // Store the file in the 'public/audio/songs/' directory
             $file->storeAs('public/audio/songs/', $filename);
+            // $file->storeAs('audio', $filename, 'public');
 
             // Create a new song record in the database
             $song = Song::create([

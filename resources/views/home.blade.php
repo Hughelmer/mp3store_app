@@ -25,7 +25,7 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 @if ($album->cover_image)
-                <!-- Assuming the 'cover_image' column contains the file paths of album cover images -->
+                <!-- Use the updated path for the album cover image -->
                 <img src="{{ asset($album->cover_image) }}" class="card-img-top" alt="{{ $album->title }}" style="max-width: 100%; max-height: 200px;">
                 @else
                 <!-- Provide a default image from the public directory -->

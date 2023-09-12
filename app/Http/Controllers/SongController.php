@@ -82,5 +82,15 @@ class SongController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Song uploaded successfully');
     }
 
+    public function destroy(Song $song)
+    {
+
+        // Delete the song
+        $song->delete();
+
+        // Redirect to the album's list of songs page
+        return redirect()->route('albums.songs', $song->album)->with('success', 'Song deleted successfully');
+    }
+
     // Add methods for create, store, edit, update, and destroy here
 }
