@@ -10,7 +10,7 @@
     <!-- Add banner content here -->
     <img src="/img/mp3shop-logo.png" alt="mp3 shop logo">
 
-    <div>
+    <div class="title m-b-md">
         Brows from the most iconic songs of your time.
     </div>
 

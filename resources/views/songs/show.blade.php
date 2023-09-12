@@ -7,12 +7,11 @@
             <h1>{{ $song->title }}</h1>
             <p>Artist: {{ $song->artist->name }}</p>
             <p>Album: {{ $song->album->title }}</p>
-            <p>Duration: {{ $song->duration }} minutes</p>
             <p>Price: ${{ $song->price }}</p>
 
             <!-- Debugging output: -->
-            <p>Audio File Path: {{ $song->audio_file }}</p>
-            <p>Generated URL: {{ asset($song->audio_file) }}</p>
+            <!-- <p>Audio File Path: {{ $song->audio_file }}</p>
+            <p>Generated URL: {{ asset($song->audio_file) }}</p> -->
 
             <audio controls>
                 <source src="{{ Storage::url($song->audio_file) }}" type="audio/mpeg">
