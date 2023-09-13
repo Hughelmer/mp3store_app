@@ -30,11 +30,6 @@ class SongController extends Controller
         return view('songs.show', compact('song'));
     }
 
-    public function viewSong(Song $song)
-    {
-        return view('song', compact('song'));
-    }
-
     public function createSong(Request $request)
     {   
         $artists = Artist::all();

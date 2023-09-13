@@ -21,20 +21,11 @@ class AlbumController extends Controller
 
     }
 
-
     public function show($id)
     {
         $album = Album::findOrFail($id);
 
         return view('albums.show', compact('album'));
-
-    }
-
-    public function viewSongs(Album $album)
-    {
-        $songs = $album->songs;
-
-        return view('album_songs', compact('album', 'songs'));
 
     }
 
