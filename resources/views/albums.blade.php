@@ -17,7 +17,6 @@
                     <div class="col-md-4">
                         <div class="album-card">
                             <h3>{{ $album->title }}</h3>
-                            <!-- Display album details here -->
                             <a href="{{ route('albums.show', $album->id) }}" class="btn btn-primary">View Album</a>
                         </div>
                     </div>

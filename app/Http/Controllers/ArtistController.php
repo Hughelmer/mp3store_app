@@ -18,6 +18,4 @@ class ArtistController extends Controller
         $artist = Artist::findOrFail($id);
         return view('artists.show', compact('artist'));
     }
-
-    // Add methods for create, store, edit, update, and destroy here
 }

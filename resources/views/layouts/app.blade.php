@@ -61,13 +61,9 @@
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                         @auth
                                             @if (Auth::user()->isAdmin())
-                                                <!-- Show admin dashboard link if the user is an admin -->
                                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
                                             @else
-                                                <!-- Show cart link for regular users -->
                                                 <a class="dropdown-item" href="{{ route('cart.index') }}">Cart</a>
-
-                                                <!-- Show order link for regular users -->
                                                 <a class="dropdown-item" href="{{ route('orders.index') }}">Orders</a>
                                             @endif
                                         @endauth
@@ -90,8 +86,7 @@
             @yield('content')
         </main>
 
-        <!-- Include the back button -->
-                @include('back_button')
+        @include('back_button')
 
     </div>
 </body>

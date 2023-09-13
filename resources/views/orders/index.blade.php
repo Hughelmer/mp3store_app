@@ -11,7 +11,6 @@
                     <th>Order ID</th>
                     <th>Date</th>
                     <th>Total Amount</th>
-                    <!-- Add more columns as needed -->
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +19,6 @@
                         <td>{{ $order->id }}</td>
                         <td>{{ $order->created_at->format('Y-m-d H:i:s') }}</td>
                         <td>${{ number_format($order->total_amount, 2) }}</td>
-                        <!-- Add more columns as needed -->
                     </tr>
                 @endforeach
             </tbody>

@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role === 'admin'; // Replace with your role check logic
+        return $this->role === 'admin';
     }
 
     public function addToCart(Song $song)

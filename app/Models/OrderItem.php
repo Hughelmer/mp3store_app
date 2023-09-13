@@ -17,8 +17,6 @@ class OrderItem extends Model
         'song_id',
         'quantity',
         'price',
-
-        // Add any other fillable fields here
     ];
 
     public function order()

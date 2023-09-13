@@ -11,22 +11,22 @@ class OrderController extends Controller
 
     public function index()
     {
-        // Get the user's orders
+
         $orders = Order::where('user_id', auth()->id())->get();
 
-        // Return a view with the user's orders
         return view('orders.index', compact('orders'));
+
     }
-    
-    // Show the details of a specific order
+
     public function show($id)
     {
         
         $order = Order::findOrFail($id);
+        
         return view('orders.show', compact('order'));
+
     }
 
-    // Store a new order
     public function store(Request $request)
     {
 
@@ -46,7 +46,6 @@ class OrderController extends Controller
         $order->items()->createMany($items);
 
         return redirect()->route('orders.show', $order)->with('success', 'Order placed successfully');
-    }
 
-    // Add more methods here
+    }
 }

@@ -11,21 +11,15 @@ class Album extends Model
         'title',
         'artist_id',
         'cover_image',
-        // Add more fillable fields here
     ];
 
-    // Relationship with Artist
     public function artist()
     {
         return $this->belongsTo(Artist::class);
     }
 
-    // Relationship with Songs
     public function songs()
     {
         return $this->hasMany(Song::class);
     }
-
-    protected $table = 'albums';
-
 }

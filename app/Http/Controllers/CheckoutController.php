@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Order;
 use App\Models\Cart;
-use App\Models\User;
+use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
 
 class CheckoutController extends Controller
 {
@@ -17,6 +17,7 @@ class CheckoutController extends Controller
         $orderTotal = $cartItems->sum('song.price');
 
         return view('checkout.index', compact('cartItems', 'orderTotal'));
+        
     }
 
     public function store()
@@ -24,13 +25,10 @@ class CheckoutController extends Controller
         $cartItems = auth()->user()->cartItems;
         $orderTotal = $cartItems->sum('song.price');
 
-        // Create a new order
         $order = Order::create([
-            'user_id' => auth()->user()->id, // Assuming orders are associated with users
-            // Add more fields here as needed
+            'user_id' => auth()->user()->id, 
         ]);
 
-        // Create order items based on the cart items
         foreach ($cartItems as $cartItem) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -40,11 +38,10 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Clear the user's cart
         auth()->user()->cartItems()->delete();
 
-        // Redirect to the order details page
         return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully.');
+
     }
 
 }

@@ -9,10 +9,8 @@ class Artist extends Model
 {
     protected $fillable = [
         'name',
-        // Add more fillable fields here
     ];
 
-    // Relationship with Albums
     public function albums()
     {
         return $this->hasMany(Album::class);

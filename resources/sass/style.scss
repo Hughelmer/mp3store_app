@@ -1,4 +1,3 @@
-/* Apply styles to HTML and body */
 html, body {
     background-color: #fff;
     color: #636b6f;
@@ -6,27 +5,23 @@ html, body {
     font-weight: 200;
     height: 100%;
     margin: 0;
-    padding: 0; /* Add padding to reset default body padding */
+    padding: 0; 
 }
 
-/* Apply full height to an element with the 'full-height' class */
 .full-height {
     height: 100%;
 }
 
-/* Center content vertically and horizontally */
 .flex-center {
     align-items: center;
     display: flex;
     justify-content: center;
 }
 
-/* Apply relative positioning */
 .position-ref {
     position: relative;
 }
 
-/* Style the top-right links */
 .top-right {
     position: absolute;
     right: 10px;
@@ -39,12 +34,10 @@ html, body {
     text-transform: uppercase;
 }
 
-/* Apply styles to content with the 'content' class */
 .content {
     text-align: center;
 }
 
-/* Style links inside the 'links' class */
 .links > a {
     color: #636b6f;
     padding: 0 25px;
@@ -55,19 +48,10 @@ html, body {
     text-transform: uppercase;
 }
 
-/* Style the 'm-b-md' class */
 .m-b-md {
     margin-bottom: 30px;
 }
 
-/* Apply styles to the footer */
-footer {
-    background: #eee;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Style the 'title' class */
 .title {
     font-size: 30px;
     text-transform: uppercase;
@@ -75,17 +59,14 @@ footer {
     color: #5e2195;
 }
 
-/* Style the 'welcome-banner' class */
 .welcome-banner {
     text-align: center;
 }
 
-/* Add spacing to the button inside 'welcome-banner' class */
 .welcome-banner .btn {
     margin-top: 20px;
 }
 
-/* Apply styles to the 'btn-primary' class */
 .btn-primary {
     background-color: #5e2195;
     color: #fff;
@@ -97,7 +78,6 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-/* Hover effect for the 'btn-primary' class */
 .btn-primary:hover {
     background-color: #432b87;
 }

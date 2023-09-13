@@ -1,12 +1,9 @@
-<!-- resources/views/admin/dashboard.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
     <h1>Admin Dashboard</h1>
 
-    <!-- Create Album Form -->
     <form action="{{ route('admin.createAlbum') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
@@ -25,8 +22,7 @@
         <input type="file" id="album-cover" name="cover_image" accept="image/*" class="form-control" required>
         <button type="submit" class="btn btn-primary">Create Album</button>
     </form>
- 
-    <!-- Create Artist Form -->
+
     <form action="{{ route('admin.createArtist') }}" method="POST">
         @csrf
         <div class="form-group">
@@ -36,7 +32,6 @@
         <button type="submit" class="btn btn-primary">Create Artist</button>
     </form>
 
-    <!-- Create Song Form -->
     <form action="{{ route('admin.createSong') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">

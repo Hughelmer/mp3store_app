@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Album;
-use App\Models\Song;
 use App\Models\Artist;
 use App\Helpers\AudioUtils;
+use App\Models\Song;
 
 class AdminController extends Controller
 {
-
     private $audioUtils;
 
     public function __construct(AudioUtils $audioUtils)
@@ -24,14 +23,13 @@ class AdminController extends Controller
     public function dashboard()
     {   
         $artists = Artist::all();
-        $albums = Album::all(); // Retrieve all artists from the database
+        $albums = Album::all(); 
 
-        return view('admin_dashboard', compact('artists', 'albums')); // Pass the artists variable to the view
+        return view('admin_dashboard', compact('artists', 'albums'));
     }
 
     public function createAlbum(Request $request)
     {
-        // Validate input
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'artist_id' => 'required|exists:artists,id',
@@ -39,14 +37,15 @@ class AdminController extends Controller
         ]);
 
         if ($validator->fails()) {
+
             return redirect()->back()->withErrors($validator)->withInput();
+
         }
 
-        // Handle album cover image upload
         if ($request->hasFile('cover_image')) {
-            $imagePath = $request->file('cover_image')->store('public/img/album_covers'); // Store the image in the 'storage/app/public/img/album_covers' directory
 
-            // Create album with the image path
+            $imagePath = $request->file('cover_image')->store('public/img/album_covers');
+
             $album = new Album([
                 'title' => $request->input('title'),
                 'artist_id' => $request->input('artist_id'),
@@ -59,18 +58,16 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('error', 'Failed to upload the album cover image');
+
     }
 
     public function createSong(Request $request)
     {   
-        // Initialize the $filename variable
         $filename = '';
 
-        // Fetch the list of artists & albums from your database
         $artists = Artist::all();
         $albums = Album::all();
 
-        // Validate input
         $validator = Validator::make($request->all(), [
             'title' => 'required|string',
             'artist_id' => 'required|exists:artists,id',
@@ -81,19 +78,17 @@ class AdminController extends Controller
         ]);
 
         if ($validator->fails()) {
+
             return redirect()->back()->withErrors($validator)->withInput();
+
         }
 
-        // Handle audio file upload
         if ($request->hasFile('audio_file')) {
             $file = $request->file('audio_file');
             $filename = time() . '_' . $file->getClientOriginalName();
 
-            // Store the file in the 'public/audio/songs/' directory
             $file->storeAs('public/audio/songs/', $filename);
-            // $file->storeAs('audio', $filename, 'public');
 
-            // Create a new song record in the database
             $song = Song::create([
                 'title' => $request->input('title'),
                 'artist_id' => $request->input('artist_id'),
@@ -111,35 +106,34 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('error', 'Failed to upload the song');
+
     }
 
 
     public function storeSong(Request $request)
     {
-        // Validate input for song creation
         $validatedData = $request->validate([
             'title' => 'required|string',
-            'duration' => 'nullable|numeric', // Make the duration field optional
+            'duration' => 'nullable|numeric',
 
         ]);
 
-        // Create song
         $song = Song::create($validatedData);
 
         return redirect()->route('admin.dashboard')->with('success', 'Song created successfully');
+
     }
 
     public function createArtist(Request $request)
     {
-        // Validate input
         $validatedData = $request->validate([
             'name' => 'required|string',
         ]);
 
-        // Create artist
+
         $artist = Artist::create($validatedData);
 
         return redirect()->route('admin.dashboard')->with('success', 'Artist created successfully');
-    }
 
+    }
 }

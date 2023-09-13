@@ -17,11 +17,9 @@
                     <div class="col-md-4 mb-4">
                         <div class="album-card">
                             @if ($album->cover_image)
-                                <!-- Display the album cover image -->
                                 <img src="{{ asset($album->cover_image) }}" class="card-img-top" alt="{{ $album->title }}">
                             @else
-                                <!-- Provide a default image if no cover image is available -->
-                                <img src="{{ asset('img/default-img.png') }}" class="card-img-top" alt="Default Image">
+                                <img src="{{ asset('storage/img/default-img.png') }}" class="card-img-top" alt="Default Image">
                             @endif
 
                             <h3>Album Title: {{ $album->title }}</h3>
@@ -30,12 +28,11 @@
                             @else
                                 <p class="card-text">Unknown Artist</p>
                             @endif
-                            <!-- Display album details here -->
+
                             <div class="d-flex justify-content-between align-items-center">
                                 <a href="{{ route('albums.show', $album->id) }}" class="btn btn-primary">View Album</a>
                                 @auth
                                     @if (Auth::user()->isAdmin())
-                                        <!-- Admin user: Show "Delete Album" button -->
                                         <form action="{{ route('albums.destroy', $album) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
