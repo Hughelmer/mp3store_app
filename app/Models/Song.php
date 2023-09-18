@@ -11,8 +11,7 @@ class Song extends Model
         'title',
         'artist_id',
         'album_id', 
-        'audio_file', 
-        'duration',
+        'audio_file',
         'price',
     ];
 
@@ -25,14 +24,19 @@ class Song extends Model
         return $this->belongsTo(Album::class);
     }
 
-    public function songCodes()
-    {
-        return $this->hasMany(SongCode::class);
-    }
-
     public function artist()
     {
         return $this->belongsTo(Artist::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+    
 }

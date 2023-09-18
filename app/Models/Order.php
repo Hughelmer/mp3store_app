@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use App\Models\OrderItem;
 
 class Order extends Model
 {
     protected $fillable = [
         'user_id', 
-        'order_total',
+        'prod_id',
+        'prod_total',
     ];
 
     public function user()
@@ -28,4 +28,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function song()
+    {
+        return $this->belongsTo(Song::class);
+    }
+
 }

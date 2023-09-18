@@ -34,6 +34,7 @@ class AdminController extends Controller
             'title' => 'required|string',
             'artist_id' => 'required|exists:artists,id',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'price' => 'required|numeric|min:0.00',
         ]);
 
         if ($validator->fails()) {
@@ -49,7 +50,8 @@ class AdminController extends Controller
             $album = new Album([
                 'title' => $request->input('title'),
                 'artist_id' => $request->input('artist_id'),
-                'cover_image' => str_replace('public/', 'storage/', $imagePath), // Update the image path
+                'cover_image' => str_replace('public/', 'storage/', $imagePath),
+                'price' => $request->input('price'),
             ]);
 
             $album->save();

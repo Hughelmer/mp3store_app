@@ -22,7 +22,7 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             @else
-                <form action="{{ route('cart.add', $song) }}" method="POST">
+                <form action="{{ route('cart.add', ['type' => 'song', 'id' => $song->id]) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
                 </form>

@@ -9,7 +9,6 @@
         <div class="song-card">
             <h3>{{ $song->title }}</h3>
             <p>Artist: {{ $song->artist->name }}</p>
-            <p>Duration: {{ $song->duration }} minutes</p>
             <audio controls>
                 <source src="{{ $song->audio_url }}" type="audio/mpeg">
                 Your browser does not support the audio element.

@@ -14,7 +14,7 @@ class CheckoutController extends Controller
     public function index()
     {
         $cartItems = auth()->user()->cartItems;
-        $orderTotal = $cartItems->sum('song.price');
+        $orderTotal = $cartItems->sum('price');
 
         return view('checkout.index', compact('cartItems', 'orderTotal'));
         
@@ -23,18 +23,18 @@ class CheckoutController extends Controller
     public function store()
     {
         $cartItems = auth()->user()->cartItems;
-        $orderTotal = $cartItems->sum('song.price');
+        $orderTotal = $cartItems->sum('price');
 
         $order = Order::create([
-            'user_id' => auth()->user()->id, 
+            'user_id' => auth()->user()->id,
+            'order_total' => $orderTotal,
         ]);
 
         foreach ($cartItems as $cartItem) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'song_id' => $cartItem->song_id,
+            $order->items()->create([
+                'product_id' => $cartItem->product_id,
                 'quantity' => $cartItem->quantity,
-                'price' => $cartItem->song->price,
+                'price' => $cartItem->price,
             ]);
         }
 

@@ -11,6 +11,7 @@ class Album extends Model
         'title',
         'artist_id',
         'cover_image',
+        'price',
     ];
 
     public function artist()
@@ -21,5 +22,15 @@ class Album extends Model
     public function songs()
     {
         return $this->hasMany(Song::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 }

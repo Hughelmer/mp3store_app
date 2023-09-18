@@ -49,12 +49,14 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    public function addToCart(Song $song)
+    public function addToCart($item, $quantity = 1)
     {
-        $this->cartItems()->updateOrCreate(
-            ['song_id' => $song->id],
-            ['quantity' => $this->cartItems()->where('song_id', $song->id)->value('quantity') + 1]
-        );
+        if ($item instanceof Song || $item instanceof Album) {
+            $this->cartItems()->updateOrCreate(
+                ['product_id' => $item->id],
+                ['quantity' => $this->cartItems()->where('product_id', $item->id)->value('quantity') + $quantity]
+            );
+        }
     }
 
     public function cartItems()

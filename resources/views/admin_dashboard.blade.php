@@ -20,6 +20,10 @@
         </div>
         <label for="album-cover">Cover Image:</label>
         <input type="file" id="album-cover" name="cover_image" accept="image/*" class="form-control" required>
+        <div class="form-group">
+            <label for="price">Price (USD)</label>
+            <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}" required>
+        </div>
         <button type="submit" class="btn btn-primary">Create Album</button>
     </form>
 

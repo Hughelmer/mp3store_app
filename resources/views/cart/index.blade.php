@@ -10,7 +10,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Song</th>
+                    <th>Product</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Actions</th>
@@ -19,9 +19,17 @@
             <tbody>
                 @foreach ($cartItems as $cartItem)
                     <tr>
-                        <td>{{ $cartItem->song->title }}</td>
+                        <td>
+                            @if ($cartItem->product_type === 'song' && $cartItem->song)
+                                {{ $cartItem->song->title }}
+                            @elseif ($cartItem->product_type === 'album' && $cartItem->album)
+                                {{ $cartItem->album->title }}
+                            @else
+                                Product Not Found
+                            @endif
+                        </td>
                         <td>{{ $cartItem->quantity }}</td>
-                        <td>${{ $cartItem->song->price }}</td>
+                        <td>${{ $cartItem->price }}</td>
                         <td>
                             <form action="{{ route('cart.remove', $cartItem) }}" method="POST">
                                 @csrf

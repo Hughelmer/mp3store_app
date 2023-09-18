@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->unsignedBigInteger('artist_id')->nullable();
             $table->string('cover_image')->nullable();
-            // Define foreign key constraint
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
+            $table->decimal('price', 8, 2)->default(0.00);
             $table->timestamps();
         });
     }

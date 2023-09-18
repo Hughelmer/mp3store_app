@@ -63,8 +63,8 @@
                                             @if (Auth::user()->isAdmin())
                                                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
                                             @else
-                                                <a class="dropdown-item" href="{{ route('cart.index') }}">Cart</a>
-                                                <a class="dropdown-item" href="{{ route('orders.index') }}">Orders</a>
+                                                <a class="dropdown-item" href="{{ route('cart.index') }}">My Cart</a>
+                                                <a class="dropdown-item" href="{{ route('orders.index') }}">My Orders</a>
                                             @endif
                                         @endauth
 

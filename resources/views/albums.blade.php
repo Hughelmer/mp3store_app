@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<!-- <div class="container">
     <div class="search-container">
         <h1>Discover Albums</h1>
         <form action="{{ route('albums.index') }}" method="GET" class="search-form">
@@ -26,5 +26,6 @@
             <p>No albums found</p>
         @endif
     </div>
-</div>
+</div> -->
+
 @endsection
