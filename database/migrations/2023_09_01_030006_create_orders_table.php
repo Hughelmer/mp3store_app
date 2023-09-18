@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('song_id')->nullable();
-            $table->foreign('song_id')->references('id')->on('songs')->onDelete('cascade');
             $table->decimal('order_total', 10, 2)->nullable();
             $table->timestamps();
         });

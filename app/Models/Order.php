@@ -9,9 +9,8 @@ use App\Models\OrderItem;
 class Order extends Model
 {
     protected $fillable = [
-        'user_id', 
-        'prod_id',
-        'prod_total',
+        'user_id',
+        'order_total',
     ];
 
     public function user()
@@ -22,16 +21,6 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
-    }
-
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class);
-    }
-
-    public function song()
-    {
-        return $this->belongsTo(Song::class);
     }
 
 }

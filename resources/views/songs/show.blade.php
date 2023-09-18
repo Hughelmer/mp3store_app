@@ -26,7 +26,11 @@
                     @csrf
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
                 </form>
-                <a href="{{ route('cart.checkout') }}" class="btn btn-success">Checkout</a>
+                <!-- <form action="{{ route('cart.place-order') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-success">Checkout</button>
+                </form> -->
+                <a href="{{ route('cart.index') }}" class="btn btn-success">Checkout</a>
             @endif
         </div>
     </div>

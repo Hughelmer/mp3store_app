@@ -20,10 +20,9 @@
                 @foreach ($cartItems as $cartItem)
                     <tr>
                         <td>
-                            @if ($cartItem->product_type === 'song' && $cartItem->song)
-                                {{ $cartItem->song->title }}
-                            @elseif ($cartItem->product_type === 'album' && $cartItem->album)
-                                {{ $cartItem->album->title }}
+                            @if ($cartItem)
+                                Product Type: {{ $cartItem->product_type }}<br>
+                                Title: {{ $cartItem->song->title }}<br>
                             @else
                                 Product Not Found
                             @endif
@@ -42,9 +41,12 @@
             </tbody>
         </table>
 
-        <p>Total: ${{ $cartItems->sum(function ($cartItem) { return $cartItem->song->price * $cartItem->quantity; }) }}</p>
+        <p>Total: ${{ $cartItems->sum(function ($cartItem) { return $cartItem->price * $cartItem->quantity; }) }}</p>
 
-        <a href="{{ route('cart.checkout') }}" class="btn btn-primary">Proceed to Checkout</a>
+        <form action="{{ route('cart.place-order') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary">Checkout</button>
+        </form>
     @endif
 </div>
 @endsection

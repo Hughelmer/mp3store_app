@@ -11,12 +11,19 @@
     <ul>
         @foreach ($order->items as $item)
             <li>
-                {{ $item->song->title }} - Quantity: {{ $item->quantity }}
-                (Price: ${{ $item->song->price }} each)
+                @if ($item->product_type === 'song' && $item->song)
+                    {{ $item->song->title }} - Quantity: {{ $item->quantity }}
+                    (Price: ${{ $item->price }} each)
+                @elseif ($item->product_type === 'album' && $item->album)
+                    {{ $item->album->title }} - Quantity: {{ $item->quantity }}
+                    (Price: ${{ $item->price }} each)
+                @else
+                    Unknown Product
+                @endif
             </li>
         @endforeach
     </ul>
 
-    <p>Total Price: ${{ $order->total_price }}</p>
+    <p>Total Price: ${{ $order->order_total }}</p>
 </div>
 @endsection

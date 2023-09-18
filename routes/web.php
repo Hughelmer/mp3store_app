@@ -69,8 +69,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/cart/add/{type}/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/remove/{cart}', [CartController::class, 'remove'])->name('cart.remove');
     
-    Route::get('/cart/checkout', [CheckoutController::class, 'index'])->name('cart.checkout');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::post('/cart/place-order', [CartController::class, 'placeOrder'])->name('cart.place-order');
+    // Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

@@ -24,4 +24,10 @@ class Cart extends Model
     {
         return $this->belongsTo(Song::class, 'product_id');
     }
+
+    public function album()
+    {
+    return $this->belongsTo(Album::class);
+    }
+
 }

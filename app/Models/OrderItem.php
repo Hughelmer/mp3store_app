@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CartItem extends Model
+class OrderItem extends Model
 {
     protected $fillable = [
-        'user_id',
+        'order_id',
         'product_id',
         'product_type',
         'song_id',
@@ -17,20 +17,14 @@ class CartItem extends Model
         'price',
     ];
 
-    public function user()
+    public function order()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function product()
     {
-        if ($this->product_type === 'song') {
-            return $this->belongsTo(Song::class, 'product_id');
-        } elseif ($this->product_type === 'album') {
-            return $this->belongsTo(Album::class, 'product_id');
-        } else {
-            return null;
-        }
+        return $this->morphTo('product');
     }
 
     public function song()
@@ -42,5 +36,4 @@ class CartItem extends Model
     {
         return $this->belongsTo(Album::class, 'product_id')->where('product_type', 'album');
     }
-
 }
