@@ -22,7 +22,11 @@
                         <td>
                             @if ($cartItem)
                                 Product Type: {{ $cartItem->product_type }}<br>
-                                Title: {{ $cartItem->song->title }}<br>
+                                @if ($cartItem->product_type === 'song' && $cartItem->song)
+                                    Title: {{ $cartItem->song->title }}<br>
+                                @elseif ($cartItem->product_type === 'album' && $cartItem->album)
+                                    Title: {{ $cartItem->album->title }}<br>
+                                @endif
                             @else
                                 Product Not Found
                             @endif

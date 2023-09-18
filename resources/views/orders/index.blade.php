@@ -2,24 +2,42 @@
 
 @section('content')
 <div class="container">
-    <h1>Your Orders</h1>
+    <h1>My Orders</h1>
 
     @if ($orders->count() > 0)
         <table class="table">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Date</th>
+                    <th>Product</th>
+                    <th>Title</th>
                     <th>Total Amount</th>
+                    <th>Download</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($orders as $order)
-                    <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->created_at->format('Y-m-d H:i:s') }}</td>
-                        <td>${{ number_format($order->total_amount, 2) }}</td>
-                    </tr>
+                    @foreach ($order->items as $item)
+                        <tr>
+                            <td>{{ $item->product_type }}</td>
+                            <td>
+                                @if ($item->product_type === 'song' && $item->song)
+                                    {{ $item->song->title }}
+                                @elseif ($item->product_type === 'album' && $item->album)
+                                    {{ $item->album->title }}
+                                @else
+                                    Product Not Found
+                                @endif
+                            </td>
+                            <td>${{ number_format($order->order_total, 2) }}</td>
+                            <td>
+                                @if ($item->product_type === 'song' && $item->song)
+                                    <a href="{{ route('audio.file', $item->song->audio_file) }}" class="btn btn-primary" download>Download Song</a>
+                                @elseif ($item->product_type === 'album' && $item->album)
+                                    <a href="{{ route('albums.download', $item->album->id) }}" class="btn btn-primary" download>Download Album</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
                 @endforeach
             </tbody>
         </table>

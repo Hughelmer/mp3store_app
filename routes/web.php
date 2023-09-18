@@ -70,8 +70,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/cart/remove/{cart}', [CartController::class, 'remove'])->name('cart.remove');
     
     Route::post('/cart/place-order', [CartController::class, 'placeOrder'])->name('cart.place-order');
-    // Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+    Route::get('/albums/{id}/download', [AlbumController::class, 'download'])->name('albums.download');
+
 });

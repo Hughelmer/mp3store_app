@@ -22,18 +22,18 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public function product()
-    {
-        return $this->morphTo('product');
-    }
-
     public function song()
     {
-        return $this->belongsTo(Song::class, 'product_id')->where('product_type', 'song');
+        return $this->belongsTo(Song::class);
     }
 
     public function album()
     {
-        return $this->belongsTo(Album::class, 'product_id')->where('product_type', 'album');
+        return $this->belongsTo(Album::class);
+    }
+    
+    public function product()
+    {
+        return $this->morphTo('product');
     }
 }

@@ -22,7 +22,7 @@ class OrderController extends Controller
         return view('orders.show', compact('order'));
     }
 
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         $order = Order::create([
             'user_id' => auth()->user()->id,
@@ -46,5 +46,5 @@ class OrderController extends Controller
         }
 
         return redirect()->route('orders.show', $order)->with('success', 'Order placed successfully');
-    }
+    }*/
 }
