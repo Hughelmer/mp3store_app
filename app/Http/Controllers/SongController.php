@@ -35,6 +35,6 @@ class SongController extends Controller
 
         $song->delete();
 
-        return redirect()->route('albums.songs', $song->album)->with('success', 'Song deleted successfully');
+        return redirect()->route('albums.show', $song->album)->with('success', 'Song deleted successfully');
     }
 }

@@ -4,6 +4,18 @@
 <div class="container">
     <h1>Order Details</h1>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <p>Order ID: {{ $order->id }}</p>
     <p>Order Date: {{ $order->created_at }}</p>
 

@@ -4,11 +4,23 @@
 <div class="container">
     <h1>Admin Dashboard</h1>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form action="{{ route('admin.createAlbum') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="album-title">Album Title:</label>
-            <input type="text" id="album-title" name="title" class="form-control" required>
+            <input type="text" id="album-title" name="title" class="form-control" value="{{ old('title') }}" required>
         </div>
         <div class="form-group">
             <label for="artist_id">Select Artist:</label>

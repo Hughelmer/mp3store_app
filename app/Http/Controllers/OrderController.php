@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
+use App\Models\Album;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Song;
 use App\Models\User;
 
 class OrderController extends Controller
@@ -22,29 +28,54 @@ class OrderController extends Controller
         return view('orders.show', compact('order'));
     }
 
-    /*public function store(Request $request)
-    {
-        $order = Order::create([
-            'user_id' => auth()->user()->id,
-        ]);
+    public function downloadSong($songId)
+     {
+        $song = Song::find($songId);
 
-        foreach ($request->input('product_ids') as $productId) {
-            $orderItem = new OrderItem([
-                'product_id' => $productId,
-                'quantity' => $request->input('quantities')[$productId], 
-            ]);
+        if ($song) {
+            $filePath = storage_path('app/public/audio/songs/' . $song->audio_file);
 
-            if ($request->input('product_type') === 'song') {
-                $orderItem->product_type = 'song';
-                $orderItem->price = $orderItem->product->price;
-            } elseif ($request->input('product_type') === 'album') {
-                $orderItem->product_type = 'album';
-                $orderItem->price = $orderItem->product->price;
+            if (file_exists($filePath)) {
+                $headers = [
+                    'Content-Type' => 'audio/mpeg',
+                    'Content-Disposition' => 'attachment; filename="' . $song->title . '.mp3"',
+                ];
+
+                return Response::stream(function () use ($filePath) {
+                    readfile($filePath);
+                }, 200, $headers);
             }
-
-            $order->items()->save($orderItem);
         }
 
-        return redirect()->route('orders.show', $order)->with('success', 'Order placed successfully');
-    }*/
+        return redirect()->back()->with('error', 'Song not found.');
+    }
+
+    public function downloadAlbum($albumId)
+    {
+        $album = Album::find($albumId);
+
+        if ($album) {
+              
+            $filePath = storage_path('app/' . $filePath);
+
+            if (Storage::exists($filePath)) {
+                return $this->downloadFile($filePath, $album->title . '.zip');
+            }
+        }
+
+        return redirect()->back()->with('error', 'Album not found.');
+    }
+
+    private function downloadFile($filePath, $fileName)
+    {
+        return response()->download(
+            storage_path('app/' . $filePath),
+            $fileName,
+            [
+                'Content-Type' => 'application/octet-stream',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]
+        );
+    }
+
 }

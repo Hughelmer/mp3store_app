@@ -10,6 +10,18 @@
         </form>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="albums-list">
         @if (count($albums) > 0)
             <div class="row">
@@ -43,10 +55,6 @@
                                             @csrf
                                             <button type="submit" class="btn btn-success">Add to Cart</button>
                                         </form>
-                                        <!-- <form action="{{ route('cart.place-order') }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success">Checkout</button>
-                                        </form> -->
                                         <a href="{{ route('cart.index') }}" class="btn btn-success">Checkout</a>
                                     @endif
                                 @endauth

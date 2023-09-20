@@ -4,6 +4,18 @@
 <div class="container">
     <h1>My Orders</h1>
 
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     @if ($orders->count() > 0)
         <table class="table">
             <thead>
@@ -31,9 +43,9 @@
                             <td>${{ number_format($order->order_total, 2) }}</td>
                             <td>
                                 @if ($item->product_type === 'song' && $item->song)
-                                    <a href="{{ route('audio.file', $item->song->audio_file) }}" class="btn btn-primary" download>Download Song</a>
+                                    <a href="{{ route('orders.download.song', $item->song->id) }}" class="btn btn-primary" download>Download Song</a>
                                 @elseif ($item->product_type === 'album' && $item->album)
-                                    <a href="{{ route('albums.download', $item->album->id) }}" class="btn btn-primary" download>Download Album</a>
+                                    <a href="{{ route('orders.download.album', $item->album->id) }}" class="btn btn-primary" download>Download Album</a>
                                 @endif
                             </td>
                         </tr>

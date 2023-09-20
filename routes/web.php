@@ -25,7 +25,7 @@ use App\Http\Controllers\SongController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+ 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -55,7 +55,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
     Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
-    Route::get('albums/{album}/songs', [AlbumController::class, 'viewSongs'])->name('albums.songs');
     Route::delete('/albums/{album}', [AlbumController::class, 'destroy'])->name('albums.destroy');
 
     Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
@@ -75,5 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     Route::get('/albums/{id}/download', [AlbumController::class, 'download'])->name('albums.download');
+    Route::get('/orders/download/song/{song}', [OrderController::class, 'downloadSong'])->name('orders.download.song');
+    Route::get('/orders/download/album/{album}', [OrderController::class, 'downloadAlbum'])->name('orders.download.album');
 
 });
