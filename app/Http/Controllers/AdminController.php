@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Requests\CreateAlbumRequest;
+use App\Http\Requests\CreateArtistRequest;
+use App\Http\Requests\CreateSongRequest;
+use App\Http\Requests\CreateStoreSongRequest;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Helpers\AudioUtils;
@@ -28,20 +31,8 @@ class AdminController extends Controller
         return view('admin_dashboard', compact('artists', 'albums'));
     }
 
-    public function createAlbum(Request $request)
+    public function createAlbum(CreateAlbumRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'artist_id' => 'required|exists:artists,id',
-            'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'price' => 'required|numeric|min:0.00',
-        ]);
-
-        if ($validator->fails()) {
-
-            return redirect()->back()->withErrors($validator)->withInput();
-
-        }
 
         if ($request->hasFile('cover_image')) {
 
@@ -63,27 +54,11 @@ class AdminController extends Controller
 
     }
 
-    public function createSong(Request $request)
+    public function createSong(CreateSongRequest $request)
     {   
         $filename = '';
-
         $artists = Artist::all();
         $albums = Album::all();
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'artist_id' => 'required|exists:artists,id',
-            'audio_file' => 'required|mimes:mp3,wav,ogg,flac',
-            'duration' => 'nullable|numeric',
-            'album_id' => 'required|exists:albums,id',
-            'price' => 'required|numeric|min:0.00',
-        ]);
-
-        if ($validator->fails()) {
-
-            return redirect()->back()->withErrors($validator)->withInput();
-
-        }
 
         if ($request->hasFile('audio_file')) {
             $file = $request->file('audio_file');
@@ -111,30 +86,17 @@ class AdminController extends Controller
     }
 
 
-    public function storeSong(Request $request)
+    public function storeSong(CreateStoreSongRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'duration' => 'nullable|numeric',
-
-        ]);
-
-        $song = Song::create($validatedData);
+        $song = Song::create($request->validated());
 
         return redirect()->route('admin.dashboard')->with('success', 'Song created successfully');
-
     }
 
-    public function createArtist(Request $request)
+    public function createArtist(CreateArtistRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-        ]);
-
-
-        $artist = Artist::create($validatedData);
+        $artist = Artist::create($request->validated());
 
         return redirect()->route('admin.dashboard')->with('success', 'Artist created successfully');
-
     }
 }
