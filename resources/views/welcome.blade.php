@@ -13,6 +13,6 @@
 
 </div>
 <div class="text-center">
-    <a href="{{ route('home') }}" class="btn btn-primary">Check Songs</a>
+    <a href="{{ route('home') }}" class="btn btn-primary">Check Albums</a>
 </div>
 @endsection

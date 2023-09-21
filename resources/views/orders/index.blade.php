@@ -43,7 +43,7 @@
                             <td>${{ number_format($order->order_total, 2) }}</td>
                             <td>
                                 @if ($item->product_type === 'song' && $item->song)
-                                    <a href="{{ route('download.song', $item->song->id) }}" class="btn btn-primary" download>Download Song</a>
+                                    <a href="{{ route('download.song', ['song' => $item->song->id]) }}" class="btn btn-primary" download>Download Song</a>
                                 @elseif ($item->product_type === 'album' && $item->album)
                                     <a href="{{ route('download.album', $item->album->id) }}" class="btn btn-primary" download>Download Album</a>
                                 @endif

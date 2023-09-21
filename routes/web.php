@@ -78,5 +78,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/albums/{id}/download', [AlbumController::class, 'download'])->name('albums.download');
     Route::get('/orders/download/song/{song}', [OrderController::class, 'downloadSong'])->name('download.song');
     Route::get('/orders/download/album/{album}', [OrderController::class, 'downloadAlbum'])->name('download.album');
-
 });
