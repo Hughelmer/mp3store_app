@@ -30,6 +30,13 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
+Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
+
+Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
+Route::get('/songs/{id}', [SongController::class, 'show'])->name('song.show');
+Route::get('songs/{song}', [SongController::class, 'viewSong'])->name('songs.view');
+
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/createAlbum', [AdminController::class, 'createAlbum'])->name('admin.createAlbum');
@@ -53,13 +60,8 @@ Route::middleware(['auth'])->group(function () {
         abort(404);
     })->name('audio.file');
 
-    Route::get('/albums', [AlbumController::class, 'index'])->name('albums.index');
-    Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
     Route::delete('/albums/{album}', [AlbumController::class, 'destroy'])->name('albums.destroy');
 
-    Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
-    Route::get('/songs/{id}', [SongController::class, 'show'])->name('song.show');
-    Route::get('songs/{song}', [SongController::class, 'viewSong'])->name('songs.view');
     Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('song.destroy');
 });
 
@@ -74,7 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
     Route::get('/albums/{id}/download', [AlbumController::class, 'download'])->name('albums.download');
-    Route::get('/orders/download/song/{song}', [OrderController::class, 'downloadSong'])->name('orders.download.song');
-    Route::get('/orders/download/album/{album}', [OrderController::class, 'downloadAlbum'])->name('orders.download.album');
+    Route::get('/orders/download/song/{song}', [OrderController::class, 'downloadSong'])->name('download.song');
+    Route::get('/orders/download/album/{album}', [OrderController::class, 'downloadAlbum'])->name('download.album');
 
 });

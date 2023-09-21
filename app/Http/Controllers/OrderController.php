@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -28,22 +29,20 @@ class OrderController extends Controller
         return view('orders.show', compact('order'));
     }
 
-    public function downloadSong($songId)
-     {
+    public function downloadSong(Response $response, $songId)
+    {
         $song = Song::find($songId);
 
         if ($song) {
             $filePath = storage_path('app/public/audio/songs/' . $song->audio_file);
 
             if (file_exists($filePath)) {
-                $headers = [
-                    'Content-Type' => 'audio/mpeg',
-                    'Content-Disposition' => 'attachment; filename="' . $song->title . '.mp3"',
-                ];
+                $fileName = $song->title . '.mp3';
 
-                return Response::stream(function () use ($filePath) {
-                    readfile($filePath);
-                }, 200, $headers);
+                return response()->download($filePath, $fileName, [
+                    'Content-Type' => 'audio/mpeg',
+                    'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                ]);
             }
         }
 
@@ -55,27 +54,19 @@ class OrderController extends Controller
         $album = Album::find($albumId);
 
         if ($album) {
-              
-            $filePath = storage_path('app/' . $filePath);
+            $filePath = storage_path('app/public/albums/' . $album->file_path); // Update the file path here
 
-            if (Storage::exists($filePath)) {
-                return $this->downloadFile($filePath, $album->title . '.zip');
+            if (file_exists($filePath)) {
+                $fileName = $album->title . '.zip';
+
+                return response()->download($filePath, $fileName, [
+                    'Content-Type' => 'application/octet-stream',
+                    'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+                ]);
             }
         }
 
         return redirect()->back()->with('error', 'Album not found.');
-    }
-
-    private function downloadFile($filePath, $fileName)
-    {
-        return response()->download(
-            storage_path('app/' . $filePath),
-            $fileName,
-            [
-                'Content-Type' => 'application/octet-stream',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-            ]
-        );
     }
 
 }
