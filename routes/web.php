@@ -61,7 +61,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('audio.file');
 
     Route::delete('/albums/{album}', [AlbumController::class, 'destroy'])->name('albums.destroy');
-
     Route::delete('/songs/{song}', [SongController::class, 'destroy'])->name('song.destroy');
 });
 
