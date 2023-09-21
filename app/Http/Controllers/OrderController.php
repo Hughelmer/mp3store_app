@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Logs;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -14,6 +13,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Song;
 use App\Models\User;
+use ZipArchive;
 
 class OrderController extends Controller
 {
@@ -48,28 +48,69 @@ class OrderController extends Controller
                 exit;
             }
         }
+        
         http_response_code(404);
     }
 
 
     public function downloadAlbum($albumId)
     {
+        if (!class_exists('ZipArchive')) {
+            return redirect()->back()->with('error', 'ZipArchive class is not available in this PHP environment.');
+        }
+
         $album = Album::find($albumId);
 
-        if ($album) {
-            $filePath = storage_path('app/public/albums/' . $album->file_path);
+        if (!$album) {
+            return redirect()->back()->with('error', 'Album not found.');
+        }
 
-            if (file_exists($filePath)) {
-                $fileName = $album->title . '.zip';
+        $tempDir = tempnam(sys_get_temp_dir(), 'album_');
+        unlink($tempDir);
+        mkdir($tempDir);
 
-                return response()->download($filePath, $fileName, [
-                    'Content-Type' => 'application/octet-stream',
-                    'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-                ]);
+        $logData = [];
+
+        foreach ($album->songs as $index => $song) {
+            $originalFilePath = storage_path('app/' . $song->audio_file);
+            $newFileName = "track{$index}.mp3";
+            $newFilePath = "{$tempDir}/{$newFileName}";
+
+            if (copy($originalFilePath, $newFilePath)) {
+                $logData[] = "Copied song: {$originalFilePath} to {$newFilePath}";
+            } else {
+                $logData[] = "Failed to copy song: {$originalFilePath}";
             }
         }
 
-        return redirect()->back()->with('error', 'Album not found.');
+        $zipFileName = $album->title . '.zip';
+        $zipFilePath = "{$tempDir}/{$zipFileName}";
+        $zip = new ZipArchive();
+
+        if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+
+            foreach (glob("{$tempDir}/*.mp3") as $songFile) {
+                $zip->addFile($songFile, basename($songFile));
+            }
+
+            $zip->close();
+
+            header("Content-Type: application/zip");
+            header("Content-Disposition: attachment; filename=\"$zipFileName\"");
+            header("Content-Length: " . filesize($zipFilePath));
+
+            readfile($zipFilePath);
+
+            foreach (glob("{$tempDir}/*") as $file) {
+                unlink($file);
+            }
+            rmdir($tempDir);
+
+            exit;
+        }
+
+        return redirect()->back()->with('error', 'Failed to create zip archive.');
     }
+
 
 }

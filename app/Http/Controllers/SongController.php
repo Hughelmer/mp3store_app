@@ -32,7 +32,6 @@ class SongController extends Controller
 
     public function destroy(Song $song)
     {
-
         $song->delete();
 
         return redirect()->route('albums.show', $song->album)->with('success', 'Song deleted successfully');

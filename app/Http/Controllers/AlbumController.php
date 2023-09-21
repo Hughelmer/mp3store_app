@@ -18,7 +18,6 @@ class AlbumController extends Controller
         }
 
         return view('albums', compact('albums', 'search'));
-
     }
 
     public function show($id)
@@ -26,7 +25,6 @@ class AlbumController extends Controller
         $album = Album::findOrFail($id);
 
         return view('albums.show', compact('album'));
-
     }
 
     public function destroy(Album $album)
@@ -36,6 +34,5 @@ class AlbumController extends Controller
         $album->delete();
 
         return redirect()->route('home')->with('success', 'Album and associated songs deleted successfully');
-
     }
 }

@@ -14,7 +14,6 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.scss') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/sass/style.scss', 'resources/js/app.js'])
@@ -52,7 +51,7 @@
                                 </li>
                             @endif
                         @else
-                            @auth <!-- Check if a user is authenticated -->
+                            @auth
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
