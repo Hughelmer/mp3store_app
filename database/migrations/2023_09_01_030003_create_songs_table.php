@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('artist_id');
             $table->unsignedBigInteger('album_id')->nullable();
 
-            // Define foreign key constraint
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
             $table->foreign('album_id')->references('id')->on('albums')->onDelete('cascade');
             
