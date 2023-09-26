@@ -33,4 +33,9 @@ class Album extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+    public function orderItem()
+    {
+        return $this->hasOne(OrderItem::class, 'album_id');
+    }
 }

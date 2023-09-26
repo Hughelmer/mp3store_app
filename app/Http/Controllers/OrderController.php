@@ -68,14 +68,13 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Album not found.');
         }
 
-        if (!$album->order) {
+        $orderItem = OrderItem::where('album_id', $album->id)->first();
+
+        if(!$orderItem) {
             return redirect()->back()->with('error', 'This album does not have an associated order.');
         }
 
-        $user = auth()->user();
-        if ($user->id !== $album->order->user_id) {
-            return redirect()->back()->with('error', 'You are not authorized to download this album.');
-        }
+        $this->authorize('downloadAccess', $orderItem->order);
 
         $tempDir = tempnam(sys_get_temp_dir(), 'album_');
         unlink($tempDir);
