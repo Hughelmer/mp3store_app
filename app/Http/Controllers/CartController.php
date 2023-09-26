@@ -15,7 +15,7 @@ class CartController extends Controller
     public function add($type, $id)
     {
         $product = null;
-        $product_id = null; 
+        $product_id = null;
         $product_type = null;
         $song_id = null;
         $album_id = null;

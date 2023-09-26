@@ -35,6 +35,10 @@ class OrderController extends Controller
         $song = Song::find($songId);
 
         if ($song) {
+            $orderItem = OrderItem::where('song_id', $song->id)->first();
+
+            $this->authorize('downloadAccess', $orderItem->order);
+
             $filePath = storage_path('app/' . $song->audio_file);
 
             if (file_exists($filePath)) {
@@ -52,7 +56,6 @@ class OrderController extends Controller
         http_response_code(404);
     }
 
-
     public function downloadAlbum($albumId)
     {
         if (!class_exists('ZipArchive')) {
@@ -63,6 +66,15 @@ class OrderController extends Controller
 
         if (!$album) {
             return redirect()->back()->with('error', 'Album not found.');
+        }
+
+        if (!$album->order) {
+            return redirect()->back()->with('error', 'This album does not have an associated order.');
+        }
+
+        $user = auth()->user();
+        if ($user->id !== $album->order->user_id) {
+            return redirect()->back()->with('error', 'You are not authorized to download this album.');
         }
 
         $tempDir = tempnam(sys_get_temp_dir(), 'album_');
@@ -111,6 +123,5 @@ class OrderController extends Controller
 
         return redirect()->back()->with('error', 'Failed to create zip archive.');
     }
-
 
 }
