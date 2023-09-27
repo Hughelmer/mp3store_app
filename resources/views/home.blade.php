@@ -16,6 +16,12 @@
         </div>
     @endif
 
+    @if(session('info'))
+        <div class="alert alert-info">
+            {{ session('info') }}
+        </div>
+    @endif
+
     @if(session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -51,7 +57,7 @@
                                             <button type="submit" class="btn btn-danger ml-2">Delete Album</button>
                                         </form>
                                     @else
-                                        <form action="{{ route('cart.add', ['type' => 'album', 'id' => $album->id]) }}" method="POST">
+                                        <form action="{{ route('cart.addAlbum', $album->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-success">Add to Cart</button>
                                         </form>

@@ -66,10 +66,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{type}/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/remove/{cart}', [CartController::class, 'remove'])->name('cart.remove');
-    
-    Route::post('/cart/place-order', [CartController::class, 'placeOrder'])->name('cart.place-order');
+    Route::post('/cart/place-order', [CheckoutController::class, 'placeOrder'])->name('cart.place-order');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -78,3 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/orders/download/song/{song}', [OrderController::class, 'downloadSong'])->name('download.song');
     Route::get('/orders/download/album/{album}', [OrderController::class, 'downloadAlbum'])->name('download.album');
 });
+
+Route::middleware('product_type')->group(function () {
+    Route::post('/cart/add/song/{id}', [CheckoutController::class, 'addSong'])->name('cart.addSong');
+    Route::post('/cart/add/album/{id}', [CheckoutController::class, 'addAlbum'])->name('cart.addAlbum');
+});
+

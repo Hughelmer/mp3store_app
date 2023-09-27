@@ -2,6 +2,24 @@
 
 @section('content')
 <div class="container">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('info'))
+        <div class="alert alert-info">
+            {{ session('info') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    
     <div class="row">
         <div class="col-md-6">
             <h1>{{ $song->title }}</h1>
@@ -23,7 +41,7 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             @else
-                <form action="{{ route('cart.add', ['type' => 'song', 'id' => $song->id]) }}" method="POST">
+                <form action="{{ route('cart.addSong', $song->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary">Add to Cart</button>
                 </form>
